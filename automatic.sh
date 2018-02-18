@@ -10,17 +10,20 @@ unzip *.apk -d decompiled/app/src/main/
 
 # dex to jar
 echo "+ Transform classes ...";
+# Source: https://github.com/pxb1988/dex2jar
 cd resources/dex2jar-2.0/
 ./d2j-dex2jar.sh ../../decompiled/app/src/main/classes.dex -o ../../decompiled/app/src/main/classes.jar
 cd ../../
 
 echo "+ Reversing jar files ...";
+# Source: http://www.benf.org/other/cfr/
 cd resources/
 java -jar cfr_0_119.jar ../decompiled/app/src/main/classes.jar --outputdir ../decompiled/app/src/main/java/
 cd ..
 
 # Decode resources
 echo "+ Unpack static resources ...";
+# Source: https://ibotpeaches.github.io/Apktool/
 cd resources/
 java -jar apktool_2.2.2.jar d ../*.apk -o ../decompiled/res-out/
 rm -f ../decompiled/app/src/main/AndroidManifest.xml
@@ -35,6 +38,7 @@ cd ..
 # Decode appcelerator
 if [ -d "decompiled/app/src/main/java/appcelerator" -o -d "decompiled/app/src/main/org/appcelerator" ]; then
     echo "+ Appcelerator detected. Decompiling core files ...";
+    # Source: https://github.com/creador/ti_recover
     cd resources/ti_recover/
     rm -rf ../../decompiled/app/src/main/assets/Resources/*
     ./cli ../../*.apk ../../decompiled/app/src/main/assets/Resources/
