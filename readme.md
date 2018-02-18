@@ -6,6 +6,7 @@ It is a compilation of a series of projects that help the total decompilation of
 ## Advantage
 
 - It does not need a graphical interface.
+- It does not need SDK.
 - Detect and decompile projects under Appcelerartor.
 - Decompile Java files, static resources and rebuild the directories as an Android Studio project.
 
@@ -14,6 +15,11 @@ It is a compilation of a series of projects that help the total decompilation of
 
 1. Add .apk file into root directory of this project.
 2. Run automatic.sh from Bash.
+
+
+## Requirements
+
+- Require Java runtime runnable from bash as `java` command.
 
 
 ## Decompile
