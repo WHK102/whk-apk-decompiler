@@ -8,18 +8,23 @@ echo "+ Unpacking files ...";
 mkdir -p decompiled/app/src/main/
 unzip *.apk -d decompiled/app/src/main/
 
-# dex to jar
-echo "+ Transform classes ...";
-# Source: https://github.com/pxb1988/dex2jar
-cd resources/dex2jar-2.0/
-./d2j-dex2jar.sh ../../decompiled/app/src/main/classes.dex -o ../../decompiled/app/src/main/classes.jar
-cd ../../
+for dexfile in decompiled/app/src/main/classe*.dex; do
 
-echo "+ Reversing jar files ...";
-# Source: http://www.benf.org/other/cfr/
-cd resources/
-java -jar cfr_0_119.jar ../decompiled/app/src/main/classes.jar --outputdir ../decompiled/app/src/main/java/
-cd ..
+    # dex to jar
+    echo "+ Transform classes ...";
+    # Source: https://github.com/pxb1988/dex2jar
+    cd resources/dex2jar-2.0/
+    ./d2j-dex2jar.sh "../../${dexfile}" -o "../../${dexfile}.jar"
+    cd ../../
+
+    echo "+ Reversing jar files ...";
+    # Source: http://www.benf.org/other/cfr/
+    cd resources/
+    java -jar cfr_0_119.jar "../${dexfile}.jar" --outputdir ../decompiled/app/src/main/java/
+    cd ..
+
+done
+
 
 # Decode resources
 echo "+ Unpack static resources ...";
